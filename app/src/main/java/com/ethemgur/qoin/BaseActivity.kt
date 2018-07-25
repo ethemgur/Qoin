@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 
-/**
- * Created by macbook on 18/07/2018.
- */
 
 internal const val COIN_QUERY = "COIN_QUERY"
 internal const val COIN_TRANSFER = "COIN_TRANSFER"

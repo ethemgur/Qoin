@@ -4,46 +4,6 @@ import java.io.IOException
 import java.io.ObjectStreamException
 import java.io.Serializable
 
-/**
- * Created by macbook on 15/07/2018.
- */
-//class Quote2(val price: Double, val volume_24h: Double, val market_cap: Double, val percent_change_1h: Double, val percent_change_24h: Double, val percent_change_7d: Double) {
-//
-//}
-//
-//class Quote (val USD: Quote2) {
-//
-//}
-//
-//class Coin (val id: Int, val name: String, val symbol: String, val website_slug: String, val rank: Int, val circulating_supply: Double, val total_supply: Int, val max_supply: Double, val quotes: Quote, val last_updated: Double) {
-//
-//}
-
-//class Coin {
-//
-//    var id: Int? = 0
-//    var name: String? = ""
-//    var symbol: String? = ""
-//    var website_slug: String? = ""
-//    var rank: Int? = 0
-//    var circulating_supply: Double? = 0.0
-//    var total_supply: Double? = 0.0
-//    var max_supply: Double? = 0.0
-//    var last_updated: Int? = 0
-//    var price: Double? = 0.0
-//    var volume_24h: Double? = 0.0
-//    var market_cap: Double? = 0.0
-//    var percent_change_1h: Double? = 0.0
-//    var percent_change_24h: Double? = 0.0
-//    var percent_change_7d: Double? = 0.0
-//
-//
-//    override fun toString(): String {
-//        return "name = $name"
-//        return "price = $price"
-//    }
-//
-//}
 
 class Coin: Serializable {
     var id = 0

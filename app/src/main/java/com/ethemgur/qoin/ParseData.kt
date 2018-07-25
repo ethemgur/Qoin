@@ -2,14 +2,10 @@ package com.ethemgur.qoin
 
 import android.os.AsyncTask
 import android.util.Log
-import com.google.gson.Gson
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-/**
- * Created by macbook on 15/07/2018.
- */
+
 class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, ArrayList<Coin>>() {
 
     private val TAG = "ParseData"
@@ -25,12 +21,7 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
 
         val jsonData = JSONObject(params[0])
         val dataArray = jsonData.getJSONArray("data")
-//            val jsonArray: JSONArray = JSONObject(params[0]).getJSONArray("data")
-//            Log.d(TAG, "parse() called")
-//            for (i in 0 until jsonArray.length()) {
-//                val coin = Gson().fromJson(jsonArray[i].toString(), Coin::class.java)
-//                coinList.add(coin)
-//            }
+
         Log.d(TAG, "doInBackground ended")
 
         for (i in 0 until dataArray.length()) {

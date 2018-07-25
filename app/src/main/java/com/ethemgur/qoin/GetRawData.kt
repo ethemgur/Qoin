@@ -6,9 +6,6 @@ import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 
-/**
- * Created by macbook on 15/07/2018.
- */
 
 enum class DownloadStatus {
     OK, IDLE, NOT_INITIALISED, FAILED_OR_EMPTY, PERMISSIONS_ERROR, ERROR

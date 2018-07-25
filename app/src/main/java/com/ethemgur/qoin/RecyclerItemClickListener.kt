@@ -8,9 +8,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-/**
- * Created by macbook on 18/07/2018.
- */
+
 class RecyclerItemClickListener(context: Context, recyclerView: RecyclerView, private val listener: OnRecyclerClickListener): RecyclerView.SimpleOnItemTouchListener() {
 
     private val TAG = "RecyclerClickListener"

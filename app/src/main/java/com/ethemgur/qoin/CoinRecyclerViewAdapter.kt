@@ -1,17 +1,13 @@
 package com.ethemgur.qoin
 
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.ethemgur.qoin.R.id.price
 
-/**
- * Created by macbook on 17/07/2018.
- */
+
 class CoinViewHolder(view: View): RecyclerView.ViewHolder(view) {
     var name: TextView = view.findViewById(R.id.name)
     var price: TextView = view.findViewById(R.id.price)
