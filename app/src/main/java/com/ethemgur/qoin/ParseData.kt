@@ -47,7 +47,6 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
                 coin.rank = jsonCoin.getInt("rank")
                 coin.circulating_supply = jsonCoin.getDouble("circulating_supply")
                 coin.total_supply = jsonCoin.getDouble("total_supply")
-                coin.max_supply = jsonCoin.getDouble("max_supply")
                 coin.last_updated = jsonCoin.getInt("last_updated")
                 coin.price = jsonCoinUSD.getDouble("price")
                 coin.volume_24h = jsonCoinUSD.getDouble("volume_24h")
@@ -76,11 +75,4 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
         listener.onDataAvailable(result)
     }
 
-//    fun parseIntIfNotNull(name:String, jsonObject: JSONObject): Int {
-//        try {
-//            return jsonObject.getInt(name)
-//        } catch (e: JSONException) {
-//            return 0
-//        }
-//    }
 }

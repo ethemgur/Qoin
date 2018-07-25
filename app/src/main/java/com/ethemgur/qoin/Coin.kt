@@ -53,8 +53,6 @@ class Coin: Serializable {
     var rank = 0
     var circulating_supply = 0.0
     var total_supply = 0.0
-    var max_supply = 0.0
-//    var quotes = Data()
     var last_updated = 0
     var price = 0.0
     var volume_24h = 0.0
@@ -62,32 +60,6 @@ class Coin: Serializable {
     var percent_change_1h = 0.0
     var percent_change_24h = 0.0
     var percent_change_7d = 0.0
-//    var usd_price = Data.Data2().price
-//    var usd_volume_24h = Data.Data2().volume_24h
-//    var usd_market_cap = Data.Data2().market_cap
-//    var usd_percent_change_1h = Data.Data2().percent_change_1h
-//    var usd_percent_change_24h = Data.Data2().percent_change_24h
-//    var usd_percent_change_7d = Data.Data2().percent_change_7d
-
-//    companion object {
-//        class Data {
-//            var USD = Data2()
-//
-//            class Data2 {
-//                var price = 0.0
-//                var volume_24h = 0.0
-//                var market_cap = 0.0
-//                var percent_change_1h = 0.0
-//                var percent_change_24h = 0.0
-//                var percent_change_7d = 0.0
-//            }
-//
-//        }
-//
-//        private const val serialVersionUID = 1L
-//
-//    }
-
 
     override fun toString(): String {
         return "name = $name"
@@ -102,7 +74,6 @@ class Coin: Serializable {
         out.writeInt(rank)
         out.writeDouble(circulating_supply)
         out.writeDouble(total_supply)
-        out.writeDouble(max_supply)
         out.writeInt(last_updated)
         out.writeDouble(price)
         out.writeDouble(volume_24h)
@@ -121,7 +92,6 @@ class Coin: Serializable {
         rank = inStream.readInt()
         circulating_supply = inStream.readDouble()
         total_supply = inStream.readDouble()
-        max_supply = inStream.readDouble()
         last_updated = inStream.readInt()
         price = inStream.readDouble()
         volume_24h = inStream.readDouble()

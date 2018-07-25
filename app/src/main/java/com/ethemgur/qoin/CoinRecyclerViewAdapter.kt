@@ -44,6 +44,7 @@ class CoinRecyclerViewAdapter(private var coinList: List<Coin>): RecyclerView.Ad
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
         if (coinList.isEmpty()) {
             holder.name.setText(R.string.empty_coin)
+            holder.price.setText("")
         } else {
             val coinItem = coinList[position]
             holder.name.text = coinItem.name

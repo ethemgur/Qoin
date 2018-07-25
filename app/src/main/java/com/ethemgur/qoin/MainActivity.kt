@@ -24,6 +24,7 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
 
     private val TAG = "MainActivity"
     private val coinRecyclerViewAdapter = CoinRecyclerViewAdapter(ArrayList())
+    private var coinList = ArrayList<Coin>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
@@ -32,7 +33,8 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
 
         activateToolbar(false)
         recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view, this))
+        recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view,
+                this))
         recycler_view.adapter = coinRecyclerViewAdapter
 
         val getRawData = GetRawData(this)
@@ -90,13 +92,15 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
             val parseData = ParseData(this)
             parseData.execute(data)
         } else {
-            Log.d(TAG, "onDownloadComplete failed with status $status. Error message is: $data")
+            Log.d(TAG, "onDownloadComplete failed with status $status. " +
+                    "Error message is: $data")
         }
     }
 
     override fun onDataAvailable(data: ArrayList<Coin>) {
         Log.d(TAG, "onDataAvailable called")
         coinRecyclerViewAdapter.loadNewData(data)
+        coinList = data
     }
 
     override fun onError(exception: Exception) {
@@ -107,14 +111,22 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         Log.d(TAG, "onResume called")
         super.onResume()
 
+        var queryCoinList = ArrayList<Coin>()
+
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        val queryResult = sharedPref.getString(COIN_QUERY, "")
+        val queryResult = sharedPref.getString(COIN_QUERY, "").toLowerCase()
 
         if (queryResult.isNotEmpty()) {
-            val getRawData = GetRawData(this)
-            // Pass Query Result
-            getRawData.execute("https://api.coinmarketcap.com/v2/ticker/?sort=rank" +
-                    "&structure=array")
-        }
+            for (i in coinList) {
+                if (i.name.contains(queryResult, true) ||
+                        i.symbol.contains(queryResult, true)) {
+                    queryCoinList.add(i)
+                }
+            }
+            Log.d(TAG, "OnResume " + queryCoinList.toString())
+        } else queryCoinList = coinList
+
+        coinRecyclerViewAdapter.loadNewData(queryCoinList)
+
     }
 }
