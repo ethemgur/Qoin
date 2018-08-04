@@ -2,16 +2,14 @@ package com.ethemgur.qoin
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import android.support.design.widget.BottomNavigationView
 import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
-import com.ethemgur.qoin.R.id.toolbar
-
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class SearchActivity : BaseActivity() {
 
@@ -37,6 +35,7 @@ class SearchActivity : BaseActivity() {
 
         searchView?.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d(TAG, "onQueryTextSubmit called")
                 val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
                 sharedPref.edit().putString(COIN_QUERY, query).apply()
                 searchView?.clearFocus()
@@ -52,6 +51,7 @@ class SearchActivity : BaseActivity() {
         })
 
         searchView?.setOnCloseListener {
+            Log.d(TAG, "setOnCloseListener called")
             finish()
             false
         }

@@ -29,6 +29,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+<!--
+            <Button
+                android:id="@+id/button_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADD TO FAVORITES" />
+-->
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

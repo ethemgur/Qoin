@@ -50,7 +50,7 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
                 Log.d(TAG, coin.toString())
                 Log.d(TAG, "doInBackground ended")
 
-            } catch (e: JSONException) {
+            } catch (e: Exception) {
                 Log.d(TAG, "doInBackground ended with error: ${e.message}")
                 listener.onError(e)
                 continue

@@ -3,11 +3,13 @@ package com.ethemgur.qoin
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 
@@ -18,12 +20,33 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
     private val coinRecyclerViewAdapter = CoinRecyclerViewAdapter(ArrayList())
     private var coinList = ArrayList<Coin>()
 
+    private val onNavigationItemClickListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_home -> {
+                coinRecyclerViewAdapter.loadNewData(coinList)
+                true
+            }
+            R.id.navigation_search -> {
+                startActivity(Intent(this, SearchActivity::class.java))
+                true
+            }
+            R.id.navigation_favorites -> {
+                coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
+                true
+            }
+            else -> false
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         activateToolbar(false)
+
+        navigationView.setOnNavigationItemSelectedListener(onNavigationItemClickListener)
+
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view,
                 this))
@@ -119,6 +142,14 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         } else queryCoinList = coinList
 
         coinRecyclerViewAdapter.loadNewData(queryCoinList)
+    }
 
+    fun getFavoriteCoins(): ArrayList<Coin> {
+        Log.d(TAG, "getFavoriteCoins called")
+        val favCoinList = ArrayList<Coin>()
+        val favCoinIDList = db.readData()
+//        var favoriteText = application.assets.open("favorites.txt").bufferedReader().use{it.readText()}
+        for (i in favCoinIDList) for (c in coinList) if (c.id == i) favCoinList.add(c)
+        return favCoinList
     }
 }
