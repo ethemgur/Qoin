@@ -3,12 +3,17 @@ package com.ethemgur.qoin
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.design.widget.BottomNavigationView
+import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import com.ethemgur.qoin.R.id.no_coins_text
+import com.ethemgur.qoin.R.id.recycler_view
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -20,23 +25,6 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
     private val coinRecyclerViewAdapter = CoinRecyclerViewAdapter(ArrayList())
     private var coinList = ArrayList<Coin>()
 
-    private val onNavigationItemClickListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                coinRecyclerViewAdapter.loadNewData(coinList)
-                true
-            }
-            R.id.navigation_search -> {
-                startActivity(Intent(this, SearchActivity::class.java))
-                true
-            }
-            R.id.navigation_favorites -> {
-                coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
-                true
-            }
-            else -> false
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
@@ -44,8 +32,6 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         setContentView(R.layout.activity_main)
 
         activateToolbar(false)
-
-        navigationView.setOnNavigationItemSelectedListener(onNavigationItemClickListener)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view,
@@ -56,7 +42,43 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         getRawData.execute("https://api.coinmarketcap.com/v2/ticker/?sort=rank" +
                 "&structure=array")
 
+//        DECLARE DRAWER TOGGLE
+        val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle (
+                this,
+                drawer_layout,
+                toolbar,
+                R.string.menu_fav,
+                R.string.search_menu_title
+        ) {
+            override fun onDrawerClosed(drawerView: View?) {
+                super.onDrawerClosed(drawerView)
+            }
 
+            override fun onDrawerOpened(drawerView: View?) {
+                super.onDrawerOpened(drawerView)
+            }
+        }
+        drawerToggle.isDrawerIndicatorEnabled = true
+        drawer_layout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
+        navigation_view.setNavigationItemSelectedListener{
+            when (it.itemId) {
+                R.id.drawer_home -> {
+                    coinRecyclerViewAdapter.loadNewData(coinList)
+                    noListedCoins(coinList)
+                }
+
+                R.id.drawer_fav -> {
+                    coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
+                    noListedCoins(getFavoriteCoins())
+                }
+            }
+            drawer_layout.closeDrawer(GravityCompat.START)
+            true
+        }
+
+//        END OF DRAWER TOGGLE
     }
 
     override fun onItemClick(view: View, position: Int) {
@@ -148,8 +170,20 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         Log.d(TAG, "getFavoriteCoins called")
         val favCoinList = ArrayList<Coin>()
         val favCoinIDList = db.readData()
-//        var favoriteText = application.assets.open("favorites.txt").bufferedReader().use{it.readText()}
         for (i in favCoinIDList) for (c in coinList) if (c.id == i) favCoinList.add(c)
+
+//        no_coins_text.visibility = if (favCoinList.isEmpty()) View.VISIBLE else View.GONE
+
         return favCoinList
+    }
+
+    fun noListedCoins(list: ArrayList<Coin>) {
+        if (list.isEmpty()) {
+            no_coins_text.visibility = View.VISIBLE
+            recycler_view.visibility = View.GONE
+        } else {
+            no_coins_text.visibility = View.GONE
+            recycler_view.visibility = View.VISIBLE
+        }
     }
 }
