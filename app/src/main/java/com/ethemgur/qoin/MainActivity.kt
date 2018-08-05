@@ -172,8 +172,6 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         val favCoinIDList = db.readData()
         for (i in favCoinIDList) for (c in coinList) if (c.id == i) favCoinList.add(c)
 
-//        no_coins_text.visibility = if (favCoinList.isEmpty()) View.VISIBLE else View.GONE
-
         return favCoinList
     }
 
