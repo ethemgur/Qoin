@@ -5,10 +5,11 @@
     <string name="title_activity_coin_details">Coin Details</string>
     <string name="action_search">Search</string>
     <string name="searchable_hint">Enter a coin name</string>
-    <string name="empty_coin">No coins match your search</string>
+    <string name="empty_coin">No coins match with your search</string>
     <string name="menu_fav">FAVORITES</string>
     <string name="hour">HOUR</string>
     <string name="day">DAY</string>
     <string name="week">WEEK</string>
     <string name="percent_symbol">%</string>
+    <string name="empty_list_message">There is no coin to show</string>
 </resources>

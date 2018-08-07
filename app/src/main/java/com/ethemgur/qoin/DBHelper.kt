@@ -59,7 +59,7 @@ class DBHelper(val context: Context): SQLiteOpenHelper(context, DBHelper.DATABAS
         Log.d(TAG, "insertData contentValues.put called")
         val result = db.insert(TABLE_NAME, null, contentValues)
         Log.d(TAG, "insertData result called")
-        Toast.makeText(context, if (result != -1L) "Coin is successfully added"
+        Toast.makeText(context, if (result != -1L) "Added to favorites"
         else "There is an error", Toast.LENGTH_SHORT).show()
     }
 

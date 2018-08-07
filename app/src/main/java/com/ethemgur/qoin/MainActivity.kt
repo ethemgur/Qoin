@@ -3,6 +3,7 @@ package com.ethemgur.qoin
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.design.widget.TabLayout
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TableLayout
 import android.widget.Toast
 import com.ethemgur.qoin.R.id.no_coins_text
 import com.ethemgur.qoin.R.id.recycler_view
@@ -28,6 +30,7 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
+        Log.d(TAG, db.readData().size.toString())
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -78,6 +81,56 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
 //            true
 //        }
 //        END OF DRAWER TOGGLE
+
+        tabs.addOnTabSelectedListener(object:
+            TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        coinRecyclerViewAdapter.loadNewData(coinList)
+                        noListedCoins(coinList)
+                    }
+                    1 -> {
+                        coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
+                        noListedCoins(getFavoriteCoins())
+                    }
+                    2 -> startActivity(Intent(this@MainActivity,
+                            SearchActivity::class.java))
+//                    3 -> TODO("implemet alert tab")
+                }            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        coinRecyclerViewAdapter.loadNewData(coinList)
+                        noListedCoins(coinList)
+                    }
+                    1 -> {
+                        coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
+                        noListedCoins(getFavoriteCoins())
+                    }
+                    2 -> startActivity(Intent(this@MainActivity,
+                            SearchActivity::class.java))
+//                    3 -> TODO("implemet alert tab")
+                }            }
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        coinRecyclerViewAdapter.loadNewData(coinList)
+                        noListedCoins(coinList)
+                    }
+                    1 -> {
+                        coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
+                        noListedCoins(getFavoriteCoins())
+                    }
+                    2 -> startActivity(Intent(this@MainActivity,
+                            SearchActivity::class.java))
+//                    3 -> TODO("implemet alert tab")
+                }
+            }
+        }
+        )
     }
 
     override fun onItemClick(view: View, position: Int) {
@@ -169,7 +222,9 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         Log.d(TAG, "getFavoriteCoins called")
         val favCoinList = ArrayList<Coin>()
         val favCoinIDList = db.readData()
-        for (i in favCoinIDList) for (c in coinList) if (c.id == i) favCoinList.add(c)
+
+        if (favCoinIDList.isNotEmpty()) for (i in favCoinIDList)
+            for (c in coinList) if (c.id == i) favCoinList.add(c)
 
         return favCoinList
     }
@@ -184,5 +239,5 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         }
     }
 
-    
+
 }

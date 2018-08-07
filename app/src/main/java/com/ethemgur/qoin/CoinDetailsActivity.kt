@@ -27,9 +27,7 @@ class CoinDetailsActivity : BaseActivity() {
         if(db.ifExists(coin)) add_fav.setImageResource(R.drawable.ic_favorite_black_24dp)
         else add_fav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
 
-
-//        coin_name.text = coin.name
-//        coin_price.text = coin.price.toString()
+        supportActionBar?.setTitle(coin.symbol)
 
 //        SET VIEW VALUES
         coin_change1h.text = coin.percent_change_1h.toString() + "%"
