@@ -43,41 +43,40 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
                 "&structure=array")
 
 //        DECLARE DRAWER TOGGLE
-        val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle (
-                this,
-                drawer_layout,
-                toolbar,
-                R.string.menu_fav,
-                R.string.search_menu_title
-        ) {
-            override fun onDrawerClosed(drawerView: View?) {
-                super.onDrawerClosed(drawerView)
-            }
-
-            override fun onDrawerOpened(drawerView: View?) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
-        drawerToggle.isDrawerIndicatorEnabled = true
-        drawer_layout.addDrawerListener(drawerToggle)
-        drawerToggle.syncState()
-
-        navigation_view.setNavigationItemSelectedListener{
-            when (it.itemId) {
-                R.id.drawer_home -> {
-                    coinRecyclerViewAdapter.loadNewData(coinList)
-                    noListedCoins(coinList)
-                }
-
-                R.id.drawer_fav -> {
-                    coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
-                    noListedCoins(getFavoriteCoins())
-                }
-            }
-            drawer_layout.closeDrawer(GravityCompat.START)
-            true
-        }
-
+//        val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle (
+//                this,
+//                drawer_layout,
+//                toolbar,
+//                R.string.menu_fav,
+//                R.string.search_menu_title
+//        ) {
+//            override fun onDrawerClosed(drawerView: View?) {
+//                super.onDrawerClosed(drawerView)
+//            }
+//
+//            override fun onDrawerOpened(drawerView: View?) {
+//                super.onDrawerOpened(drawerView)
+//            }
+//        }
+//        drawerToggle.isDrawerIndicatorEnabled = true
+//        drawer_layout.addDrawerListener(drawerToggle)
+//        drawerToggle.syncState()
+//
+//        navigation_view.setNavigationItemSelectedListener{
+//            when (it.itemId) {
+//                R.id.drawer_home -> {
+//                    coinRecyclerViewAdapter.loadNewData(coinList)
+//                    noListedCoins(coinList)
+//                }
+//
+//                R.id.drawer_fav -> {
+//                    coinRecyclerViewAdapter.loadNewData(getFavoriteCoins())
+//                    noListedCoins(getFavoriteCoins())
+//                }
+//            }
+//            drawer_layout.closeDrawer(GravityCompat.START)
+//            true
+//        }
 //        END OF DRAWER TOGGLE
     }
 
@@ -101,12 +100,12 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        Log.d(TAG, "onCreateOptionsMenu called")
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        Log.d(TAG, "onCreateOptionsMenu called")
+//        menuInflater.inflate(R.menu.menu_main, menu)
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
@@ -184,4 +183,6 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, ParseData.On
             recycler_view.visibility = View.VISIBLE
         }
     }
+
+    
 }

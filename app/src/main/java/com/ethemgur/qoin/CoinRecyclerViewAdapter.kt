@@ -6,20 +6,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 
 
 class CoinViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    var symbol: TextView = view.findViewById(R.id.symbol)
     var name: TextView = view.findViewById(R.id.name)
     var change: TextView = view.findViewById(R.id.change)
     var price: TextView = view.findViewById(R.id.price)
+    var upArrow: ImageView = view.findViewById(R.id.upArrow)
+    var downArrow: ImageView = view.findViewById(R.id.downArrow)
 }
 
 
 class CoinRecyclerViewAdapter(private var coinList: List<Coin>): RecyclerView.Adapter<CoinViewHolder>() {
     private val TAG = "CoinRecyclerAdapter"
-    private val GREEN = Color.parseColor("#00C853")
-    private val RED = Color.parseColor("#D50000")
+    private val GREEN = Color.parseColor("#00CC00")
+    private val RED = Color.parseColor("#FF0000")
 
     fun loadNewData(newCoins: List<Coin>) {
         coinList = newCoins
@@ -44,19 +48,20 @@ class CoinRecyclerViewAdapter(private var coinList: List<Coin>): RecyclerView.Ad
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
         if (coinList.isNotEmpty()){
             val coinItem = coinList[position]
+            holder.symbol.text = coinItem.symbol
             holder.name.text = coinItem.name
             holder.change.text = coinItem.percent_change_24h.toString() + "%"
-            holder.price.text = coinItem.price.toString()
+            holder.price.text = "$" + coinItem.price.toString()
 
             if (coinItem.percent_change_24h >= 0) {
-//                holder.name.setTextColor(GREEN)
-                holder.change.text = "+" + holder.change.text
                 holder.change.setTextColor(GREEN)
-                holder.price.setTextColor(GREEN)
+                holder.downArrow.visibility = View.INVISIBLE
+                holder.upArrow.visibility = View.VISIBLE
+
             } else {
-//                holder.name.setTextColor(RED)
                 holder.change.setTextColor(RED)
-                holder.price.setTextColor(RED)
+                holder.upArrow.visibility = View.INVISIBLE
+                holder.downArrow.visibility = View.VISIBLE
             }
         }
     }

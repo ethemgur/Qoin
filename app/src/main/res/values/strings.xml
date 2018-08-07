@@ -7,4 +7,8 @@
     <string name="searchable_hint">Enter a coin name</string>
     <string name="empty_coin">No coins match your search</string>
     <string name="menu_fav">FAVORITES</string>
+    <string name="hour">HOUR</string>
+    <string name="day">DAY</string>
+    <string name="week">WEEK</string>
+    <string name="percent_symbol">%</string>
 </resources>

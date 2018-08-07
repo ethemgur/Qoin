@@ -50,7 +50,7 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
                 Log.d(TAG, coin.toString())
                 Log.d(TAG, "doInBackground ended")
 
-            } catch (e: Exception) {
+            } catch (e: JSONException) {
                 Log.d(TAG, "doInBackground ended with error: ${e.message}")
                 listener.onError(e)
                 continue
@@ -68,7 +68,7 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
 
     fun adjustPrice(d: Double): Double {
         var strPrice = d.toString()
-        while (strPrice.length < 6) strPrice = strPrice + "0"
+        while (strPrice.length < 6) strPrice += "0"
         return strPrice.substring(0,6).toDouble()
     }
 

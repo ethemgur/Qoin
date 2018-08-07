@@ -50,12 +50,12 @@ class DBHelper(val context: Context): SQLiteOpenHelper(context, DBHelper.DATABAS
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun insertData(coin_id: Int) {
+    fun insertData(coin: Coin) {
         Log.d(TAG, "insertData called")
         val db = this.writableDatabase
         Log.d(TAG, "insertData writableDatabase called")
         val contentValues = ContentValues()
-        contentValues.put(COL_COIN_ID, coin_id)
+        contentValues.put(COL_COIN_ID, coin.id)
         Log.d(TAG, "insertData contentValues.put called")
         val result = db.insert(TABLE_NAME, null, contentValues)
         Log.d(TAG, "insertData result called")
@@ -77,5 +77,16 @@ class DBHelper(val context: Context): SQLiteOpenHelper(context, DBHelper.DATABAS
         result.close()
         db.close()
         return coinList
+    }
+
+    fun deleteData(coin: Coin) {
+        val db = this.writableDatabase
+        db.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_COIN_ID=${coin.id}")
+        db.close()
+    }
+
+    fun ifExists(coin: Coin): Boolean {
+        for (c in readData()) if (c == coin.id) return true
+        return false
     }
 }
