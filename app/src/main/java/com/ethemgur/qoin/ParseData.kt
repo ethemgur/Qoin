@@ -39,7 +39,7 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
                 coin.circulating_supply = jsonCoin.getDouble("circulating_supply")
                 coin.total_supply = jsonCoin.getDouble("total_supply")
                 coin.last_updated = jsonCoin.getInt("last_updated")
-                coin.price = jsonCoinUSD.getDouble("price").toString().subSequence(0,6).toString().toDouble()
+                coin.price = adjustPrice(jsonCoinUSD.getDouble("price"))
                 coin.volume_24h = jsonCoinUSD.getDouble("volume_24h")
                 coin.market_cap = jsonCoinUSD.getDouble("market_cap")
                 coin.percent_change_1h = jsonCoinUSD.getDouble("percent_change_1h")
@@ -64,6 +64,12 @@ class ParseData(private val listener: OnDataAvailable): AsyncTask<String, Void, 
         Log.d(TAG, "onPostExecute called")
         super.onPostExecute(result)
         listener.onDataAvailable(result)
+    }
+
+    fun adjustPrice(d: Double): Double {
+        var strPrice = d.toString()
+        while (strPrice.length < 6) strPrice = strPrice + "0"
+        return strPrice.substring(0,6).toDouble()
     }
 
 }

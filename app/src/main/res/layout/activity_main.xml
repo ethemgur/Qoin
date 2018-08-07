@@ -25,6 +25,7 @@
                 android:background="?attr/colorPrimary"
                 android:elevation="4dp"
                 android:fitsSystemWindows="true"
+                app:itemIconTint="@color/colorAccent"
                 />
 
             <include layout="@layout/content_main" />
@@ -37,7 +38,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="start"
-            android:background="#ebe5ff"
+            android:background="@color/colorAccent"
             >
             <TextView
                 android:id="@+id/drawer_title"
@@ -47,7 +48,8 @@
                 android:padding="50dp"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:background="#dcfffe"
+                android:background="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 />
             <android.support.design.widget.NavigationView
                 android:id="@+id/navigation_view"

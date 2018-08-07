@@ -49,12 +49,12 @@ class CoinRecyclerViewAdapter(private var coinList: List<Coin>): RecyclerView.Ad
             holder.price.text = coinItem.price.toString()
 
             if (coinItem.percent_change_24h >= 0) {
-                holder.name.setTextColor(GREEN)
+//                holder.name.setTextColor(GREEN)
                 holder.change.text = "+" + holder.change.text
                 holder.change.setTextColor(GREEN)
                 holder.price.setTextColor(GREEN)
             } else {
-                holder.name.setTextColor(RED)
+//                holder.name.setTextColor(RED)
                 holder.change.setTextColor(RED)
                 holder.price.setTextColor(RED)
             }
